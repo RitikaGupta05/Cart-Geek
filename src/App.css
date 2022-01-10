@@ -37,6 +37,7 @@ button.login {
   list-style: none;
   margin: 0 15px;
   padding: 14px 0px;
+  cursor: pointer;
 }
 .menu li .menuImg {
   font-size: 14px;

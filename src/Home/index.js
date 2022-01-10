@@ -33,51 +33,68 @@ export default (props) => {
     'dishes': [{
       "Img": "../../images/All.png",
       "Name": "All",
-      "id": "1",
+      "id": 1,
     }, {
       "Img": "../../images/Indian.png",
       "Name": "Indian",
-      "id": "2",
+      "id": 2,
     },
     {
       "Img": "../../images/Italian.png",
       "Name": "Italian",
-      "id": "3",
+      "id": 3,
     },
     {
       "Img": "../../images/All.png",
       "Name": "Chinese",
-      "id": "4",
+      "id": 4,
     },
     {
       "Img": "../../images/Korean.png",
       "Name": "Korean",
-      "id": "5",
+      "id": 5,
     },
     {
       "Img": "../../images/All.png",
       "Name": "African",
-      "id": "6",
+      "id": 6,
     },
-    {
-      "Img": "../../images/Indian.png",
-      "Name": "Chinese",
-      "id": "7",
-    },
-    {
-      "Img": "../../images/Korean.png",
-      "Name": "Chinese",
-      "id": "8",
-    },
+   
     ]
   };
 
-  // const arrayById = obj.dishes.filter(function (el) {
-  //   return 
-    // el.id === ;
-  // });
+const chefDetails = () => {
 
-  // console.log(arrayById);
+ let data = chefWeek.filter((i) => i.chef_cusinie.filter((item)=> item.id === activeCategory).length > 0 ? true : false);
+  if(!data.length > 0) {
+    return (
+   <div></div>
+    )
+  }
+  return (
+  <div className="chef-section">
+  <div className="chef-innersection">
+    <h3 className="text-center">Chef Of the week</h3>
+  </div>
+  <div className="chef-detail">
+    <div className="row">
+      <div className="col-lg-6">
+        <div className="chefImg">
+          <img src={data && data.length ? "http://63.142.251.101:3000/" + data[0].chefprofile : ""} />
+        </div>
+      </div>
+      <div className="col-lg-6">
+        <div className="chefView">
+          <h4 className="text-start">{data && data.length ? data[0].chefname : ""}</h4>
+          <span className="text-end">{data && data.length ? data[0].chefRateing : ""} ({data && data.length ? data[0].chefReview : ""} reviews)</span></div>
+        <p dangerouslySetInnerHTML={{ __html: (data && data.length ? data[0].aboutChef : "") }} />
+
+      </div>
+    </div>
+  </div>
+</div>
+)};
+
 
   return (
     <div >
@@ -87,8 +104,8 @@ export default (props) => {
 
         <ul>
           {obj.dishes.map((item, index) => (
-            <li>
-              <div className="menuImg" id="1">
+            <li key={index}>
+              <div className="menuImg" id={item.id} onClick={() => setActiveCategory(item.id )}>
                 <img src={item.Img} />
                 <p>{item.Name} </p>
               </div>
@@ -129,7 +146,7 @@ export default (props) => {
                   }}
                 >
                   {popularDataList.map((item, i) => (
-                    <div className="slideCard">
+                    <div className="slideCard" key={i}>
                       <div className="slideCard-img">
                         <img src={item.dish_masters.length && "http://63.142.251.101:3000/" + item.dish_masters[0].dishImage} />
                       </div>
@@ -150,27 +167,7 @@ export default (props) => {
             </div>
           </div>
           <br />
-          <div className="chef-section">
-            <div className="chef-innersection">
-              <h3 className="text-center">Chef Of the week</h3>
-            </div>
-            <div className="chef-detail">
-              <div className="row">
-                <div className="col-lg-6">
-                  <div className="chefImg">
-                    <img src={chefWeek && chefWeek.length ? "http://63.142.251.101:3000/" + chefWeek[2].chefprofile : ""} />
-                  </div>
-                </div>
-                <div className="col-lg-6">
-                  <div className="chefView">
-                    <h4 className="text-start">{chefWeek && chefWeek.length ? chefWeek[2].chefname : ""}</h4>
-                    <span className="text-end">{chefWeek && chefWeek.length ? chefWeek[2].chefRateing : ""} ({chefWeek && chefWeek.length ? chefWeek[2].chefReview : ""} reviews)</span></div>
-                  <p dangerouslySetInnerHTML={{ __html: (chefWeek && chefWeek.length ? chefWeek[2].aboutChef : "") }} />
-
-                </div>
-              </div>
-            </div>
-          </div>
+          {chefDetails()}
 
           <br />
           <br />
@@ -200,7 +197,7 @@ export default (props) => {
                   }}
                 >
                   {popularDataList.map((item, i) => (
-                    <div className="slideCard">
+                    <div className="slideCard" key={i}>
                       <div className="slideCard-img">
                         <img src={item.dish_masters.length && "http://63.142.251.101:3000/" + item.dish_masters[0].dishImage} />
                       </div>
@@ -246,7 +243,7 @@ export default (props) => {
                   }}
                 >
                   {popularDataList.map((item, i) => (
-                    <div className="slideCard">
+                    <div className="slideCard" key={i}>
                       <div className="slideCard-img">
                         <img src={item.dish_masters.length && "http://63.142.251.101:3000/" + item.dish_masters[0].dishImage} />
                       </div>
